@@ -36,6 +36,11 @@ function draw() {
     character.draw();
 	platform.draw();
 
+    platform.x -= 10;
+    if(platform.x + platform.w < 0){
+        platform.x = 500;
+    }
+
     if(character.y + character.h < 300){
         character.y += 10;
     }
