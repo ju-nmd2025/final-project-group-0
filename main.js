@@ -8,28 +8,34 @@ function setup() {
     createCanvas(gameHandler.canvasWidth, gameHandler.canvasHeight);
 }
 
-// Could be a lot prettier with even more taken apart and put in the right places.
 function draw() {
     background(100, 100, 100);
-    line(0, 350, gameHandler.canvasWidth, 350);
+
+    if (gameHandler.currentGameState === gameHandler.gameStates.play) {
+
+        if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
+            gameHandler.moveCharacter(-10); 
+        }
+        if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
+            gameHandler.moveCharacter(10);
+        }
+    }
 
     switch (gameHandler.currentGameState) {
         case gameHandler.gameStates.start:
             gameHandler.startMenu();
             break;
-
         case gameHandler.gameStates.play:
             gameHandler.playGame();
             break;
-
         case gameHandler.gameStates.death:
             gameHandler.endGame();
             break;
-
         default:
             console.error("Error: draw() main");
     }
 }
+
 
 // Button logic here as it cannot be taken into classes.
 function mousePressed() {

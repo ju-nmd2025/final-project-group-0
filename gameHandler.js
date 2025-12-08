@@ -29,7 +29,7 @@ export default class GameHandler {
         gameFloor = 300,
         gameSpeed = 5,
         avgPlatformWidth = 90,
-        avgPLatformHeight = 280
+        avgPlatformHeight = 280
     ) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
@@ -37,7 +37,7 @@ export default class GameHandler {
         this.gameSpeed = gameSpeed;
         this.currentGameState = this.gameStates.start;
         this.avgPlatformWidth = avgPlatformWidth;
-        this.avgPlatformHeight = avgPLatformHeight;
+        this.avgPlatformHeight = avgPlatformHeight;
     }
 
     changeGameState(newGameState) {
@@ -45,16 +45,19 @@ export default class GameHandler {
     }
 
     resetGame() {
-		this.#character = new Character(100, 200, 50, 50, 5, 120);
+		this.#character = new Character(100, 200, 50, 50, .4, -15);
 		
         this.#platforms = [
-            new Platform(100, 270, 80, 10),
-            new Platform(250, 290, 100, 10),
-            new Platform(450, 300, 90, 10),
-            new Platform(600, 270, 80, 10),
-            new Platform(800, 290, 100, 10),
+            new Platform(100, 350, 100, 10),
+            new Platform(250, 300, 100, 10),
+            new Platform(450, 250, 100, 10),
+            new Platform(200, 200, 100, 10),
+            new Platform(350, 150, 100, 10),
+            new Platform(150, 100, 100, 10),
+            new Platform(500, 50, 100, 10),
         ];
-        this.#spikes = [new Spike(350, 300, 50, 50)];
+        this.#spikes = [];
+        this.#character.bounce();
     }
 
     startMenu() {
@@ -63,7 +66,12 @@ export default class GameHandler {
     }
 
     playGame() {
-        this.#character.draw();
+        this.#character.applyPhysics();
+
+        if (this.#character.vy > 0 && 
+        this.#character.isColliding(this.#platforms)) {
+        this.#character.bounce();
+        }
 
         generatePlatforms(
             this.#platforms,
@@ -75,32 +83,22 @@ export default class GameHandler {
 
         generateSpikes(this.#spikes, this.gameSpeed, this.canvasWidth);
 
-        this.checkCollision();
-
-        if (this.#character.y > this.gameFloor) {
-            this.#character.y = this.gameFloor;
+        if (this.#character.y > this.canvasHeight) {
+            this.changeGameState(this.gameStates.death);
         }
+        
+        this.#character.draw();
     }
 
-    characterJump() {
-        if (
-            this.#character.isColliding(this.#platforms, this.gameSpeed) ||
-            this.#character.y >= this.gameFloor
-        ) {
-            this.#character.y -= 120;
-        }
-    }
+    moveCharacter(dx) {
+    this.#character.x += dx;
 
-    checkCollision() {
-        if (
-            this.#character.y < this.gameFloor &&
-            !this.#character.isColliding(this.#platforms, this.gameSpeed)
-        ) {
-            this.#character.fall();
-        }
 
-        if (this.#character.isColliding(this.#spikes, this.gameSpeed)) {
-            this.changeGameState("death");
+        if (this.#character.x > this.canvasWidth) {
+            this.#character.x = 0;
+        } 
+        else if (this.#character.x < 0) {
+            this.#character.x = this.canvasWidth;
         }
     }
 

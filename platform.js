@@ -13,7 +13,7 @@ export default class Platform {
     }
 
     move(gameSpeed) {
-        this.x -= gameSpeed;
+        this.y += gameSpeed;
     }
 }
 
@@ -24,30 +24,21 @@ function generatePlatforms(
     standardWidth,
     standardHeight
 ) {
-    for (let i = 0; i < platforms.length; i++) {
-        platforms[i].draw();
-        platforms[i].move(gameSpeed);
+    for (let i = platforms.length - 1; i >= 0; i--) {
+        const p = platforms[i];
+        p.draw();
 
-        if (platforms[i].x + platforms[i].w < -10) {
+        if (p.y > height + 10) { // off bottom
             platforms.splice(i, 1);
 
-            if (platforms.length < 6) {
-                let biggestSpace =
-                    platforms[platforms.length - 1].w < canvasWidth
-                        ? platforms[platforms.length - 1].x +
-                          platforms[platforms.length - 1].w +
-                          standardWidth
-                        : canvasWidth;
+            // create new platform at top with random x
+            const newWidth = standardWidth + Math.floor(50 * Math.random());
+            const newX = Math.floor(Math.random() * (canvasWidth - newWidth));
+            const newY = -Math.floor(50 * Math.random()); // slightly above view
 
-                platforms.push(
-                    new Platform(
-                        biggestSpace,
-                        standardHeight - Math.floor(90 * Math.random()),
-                        standardWidth + Math.floor(50 * Math.random()),
-                        10
-                    )
-                );
-            }
+            platforms.push(
+                new Platform(newX, newY, newWidth, 10)
+            );
         }
     }
 }

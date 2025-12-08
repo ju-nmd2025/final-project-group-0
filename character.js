@@ -1,34 +1,58 @@
 // Character centric logic
 
 export default class Character {
-    constructor(x, y, w, h, fallSpeed, jumpDistance) {
+    constructor(x, y, w, h, gravity, jumpVelocity) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-        this.fallSpeed = fallSpeed;
-        this.jumpDistance = jumpDistance;
+        this.gravity = gravity;
+        this.jumpVelocity = jumpVelocity;
+        this.vy = 0;
     }
 
-    fall() {
-        this.y += this.fallSpeed;
+    applyPhysics() {
+        this.vy += this.gravity;
+        this.y += this.vy;
     }
 
-    jump() {
-        this.y -= this.jumpDistance;
+    moveLeft(speed) {
+    this.x -= speed;
     }
 
-    isColliding(objects, gameSpeed) {
-        for (const object of objects) {
-            if (
-                Math.abs(this.y + this.h - object.y) < gameSpeed &&
-                this.x + this.w >= object.x &&
-                this.x <= object.x + object.w
-            ) {
-                return true;
+    moveRight(speed) {
+    this.x += speed;
+    }
+
+
+    bounce() {
+        this.vy = this.jumpVelocity;
+    }
+
+    isColliding(platforms) {
+        const feetY = this.y + this.h;
+
+        for (const p of platforms) {
+            if (p.isBroken) continue; // skip broken platform types if you add them later
+
+            const withinX =
+                this.x + this.w > p.x &&
+                this.x < p.x + p.w;
+
+            const isFallingDown = this.vy > 0;
+
+            const hitFromAbove =
+                feetY >= p.y &&          // feet below or at platform top
+                feetY <= p.y + p.h;      // feet not too far through
+
+            if (withinX && isFallingDown && hitFromAbove) {
+                // Snap feet to platform top (optional but feels better)
+                this.y = p.y - this.h;
+                return p;
             }
         }
-        return false;
+
+        return null;
     }
 
     draw() {
