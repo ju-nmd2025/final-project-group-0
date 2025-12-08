@@ -11,6 +11,14 @@ export default class Character {
     draw() {
         rect(this.x, this.y, this.w, this.h);
     }
+    
+    moveLeft(speed) {
+        this.x -= speed;
+    }
+
+    moveRight(speed) {
+        this.x += speed;
+    }
 
     isColliding(character, platform) {
     if (platform.y === character.y + character.w && platform.x <= character.x + character.w) {
