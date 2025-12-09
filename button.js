@@ -1,37 +1,38 @@
 // Button centric logic without it having knowledge of the outside world
 
 export default class Button {
-    constructor(x, y, w, h, text) {
+    constructor(x, y, w, h, text, centered = false) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         this.text = text;
+        this.centered = centered;
     }
 
     draw() {
-        push();
-        textSize(20);
+
+        let drawX = this.centered ? (width / 2 - this.w / 2) : this.x;
+        let drawY = this.centered ? (height / 2 - this.h / 2) : this.y;
+
+        fill(220);
+        rect(drawX, drawY, this.w, this.h, 10);
+
+        fill(0);
         textAlign(CENTER, CENTER);
-        rect(this.x, this.y, this.w, this.h);
-        text(
-            this.text,
-            this.w + this.x - Math.abs(this.w - this.x),
-            this.y + this.h - Math.abs(this.h - this.y)
-        );
-        pop();
+        textSize(20);
+        text(this.text, drawX + this.w / 2, drawY + this.h / 2);
     }
 
     isHovered() {
-        if (
-            mouseX > this.x &&
-            mouseX < this.x + this.w &&
-            mouseY > this.y &&
-            mouseY < this.y + this.h
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        let drawX = this.centered ? (width / 2 - this.w / 2) : this.x;
+        let drawY = this.centered ? (height / 2 - this.h / 2) : this.y;
+
+        return (
+            mouseX > drawX &&
+            mouseX < drawX + this.w &&
+            mouseY > drawY &&
+            mouseY < drawY + this.h
+        );
     }
 }

@@ -14,8 +14,8 @@ export default class GameHandler {
     };
 
     gameButtons = {
-        startButton: new Button(200, 150, 400, 100, "Start"),
-        deathButton: new Button(200, 150, 400, 100, "You died! Restart?"),
+        startButton: new Button(0, 0, 300, 80, "Start", true),
+        deathButton: new Button(0, 0, 350, 80, "Restart", true),
     };
 
     #character;
@@ -26,15 +26,11 @@ export default class GameHandler {
     constructor(
         canvasWidth = 800,
         canvasHeight = 400,
-        gameFloor = 300,
-        gameSpeed = 5,
         avgPlatformWidth = 90,
         avgPlatformHeight = 280
     ) {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
-        this.gameFloor = gameFloor;
-        this.gameSpeed = gameSpeed;
         this.currentGameState = this.gameStates.start;
         this.avgPlatformWidth = avgPlatformWidth;
         this.avgPlatformHeight = avgPlatformHeight;
