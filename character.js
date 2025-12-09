@@ -33,7 +33,7 @@ export default class Character {
         const feetY = this.y + this.h;
 
         for (const p of platforms) {
-            if (p.isBroken) continue; // skip broken platform types if you add them later
+            if (p.isBroken) continue;
 
             const withinX =
                 this.x + this.w > p.x &&
@@ -41,12 +41,9 @@ export default class Character {
 
             const isFallingDown = this.vy > 0;
 
-            const hitFromAbove =
-                feetY >= p.y &&          // feet below or at platform top
-                feetY <= p.y + p.h;      // feet not too far through
+            const hitFromAbove = feetY >= p.y && feetY <= p.y + p.h; //  
 
             if (withinX && isFallingDown && hitFromAbove) {
-                // Snap feet to platform top (optional but feels better)
                 this.y = p.y - this.h;
                 return p;
             }

@@ -66,28 +66,39 @@ export default class GameHandler {
     }
 
     playGame() {
-        this.#character.applyPhysics();
+    this.#character.applyPhysics();
 
-        if (this.#character.vy > 0 && 
-        this.#character.isColliding(this.#platforms)) {
+    const hitPlatform = this.#character.isColliding(this.#platforms);
+    if (hitPlatform) {
         this.#character.bounce();
-        }
+    }
 
-        generatePlatforms(
-            this.#platforms,
-            this.gameSpeed,
-            this.canvasWidth,
-            this.avgPlatformWidth,
-            this.avgPlatformHeight
-        );
 
-        generateSpikes(this.#spikes, this.gameSpeed, this.canvasWidth);
+    if (this.#character.y < this.canvasHeight / 2) {
+        const dy = (this.canvasHeight / 2) - this.#character.y;
 
-        if (this.#character.y > this.canvasHeight) {
-            this.changeGameState(this.gameStates.death);
-        }
-        
-        this.#character.draw();
+        this.#character.y = this.canvasHeight / 2;
+
+        this.#platforms.forEach(p => {
+            p.y += dy;
+        });
+
+    }
+
+    generatePlatforms(
+        this.#platforms,
+        0,
+        this.canvasWidth,
+        this.avgPlatformWidth,
+        this.avgPlatformHeight
+    );
+
+
+    if (this.#character.y > this.canvasHeight) {
+        this.changeGameState(this.gameStates.death);
+    }
+
+    this.#character.draw();
     }
 
     moveCharacter(dx) {

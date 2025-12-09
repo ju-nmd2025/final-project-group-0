@@ -14,10 +14,10 @@ function draw() {
     if (gameHandler.currentGameState === gameHandler.gameStates.play) {
 
         if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
-            gameHandler.moveCharacter(-10); 
+            gameHandler.moveCharacter(-6); 
         }
         if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
-            gameHandler.moveCharacter(10);
+            gameHandler.moveCharacter(6);
         }
     }
 
