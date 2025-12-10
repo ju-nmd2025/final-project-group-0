@@ -17,11 +17,12 @@ export default class Button {
 
         fill(220);
         rect(drawX, drawY, this.w, this.h, 10);
-
+        push();
         fill(0);
         textAlign(CENTER, CENTER);
         textSize(20);
         text(this.text, drawX + this.w / 2, drawY + this.h / 2);
+        pop();
     }
 
     isHovered() {
