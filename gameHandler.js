@@ -1,5 +1,4 @@
 import { Platform, generatePlatforms } from "./platform";
-import { Spike, generateSpikes } from "./spike";
 import Character from "./character";
 import Button from "./button";
 
@@ -19,9 +18,9 @@ export default class GameHandler {
     };
 
     #character;
-
     #platforms = [];
-    #spikes = [];
+    #score = 0;
+    #highScore = 0;
 
     constructor(
         canvasWidth = 800,
@@ -41,6 +40,7 @@ export default class GameHandler {
     }
 
     resetGame() {
+        this.#score = 0;
 		this.#character = new Character(100, 200, 50, 50, .4, -15);
 		
         this.#platforms = [
@@ -52,7 +52,6 @@ export default class GameHandler {
             new Platform(150, 100, 100, 10),
             new Platform(500, 50, 100, 10),
         ];
-        this.#spikes = [];
         this.#character.bounce();
     }
 
@@ -62,44 +61,50 @@ export default class GameHandler {
     }
 
     playGame() {
-    this.#character.applyPhysics();
+        push();
+        fill(255);
+        textSize(20);
+        text("Score: " + this.#score, 10, 30);
+        pop();
+        this.#character.applyPhysics();
 
-    const hitPlatform = this.#character.isColliding(this.#platforms);
-    if (hitPlatform) {
-        this.#character.bounce();
-    }
+        const hitPlatform = this.#character.isColliding(this.#platforms);
+        if (hitPlatform) {
+            this.#character.bounce();
+        }
 
+        if (this.#character.y < this.canvasHeight / 2) {
+            const dy = (this.canvasHeight / 2) - this.#character.y;
 
-    if (this.#character.y < this.canvasHeight / 2) {
-        const dy = (this.canvasHeight / 2) - this.#character.y;
-
-        this.#character.y = this.canvasHeight / 2;
+            this.#character.y = this.canvasHeight / 2;
 
         this.#platforms.forEach(p => {
             p.y += dy;
         });
-
-    }
-
-    generatePlatforms(
-        this.#platforms,
-        0,
-        this.canvasWidth,
-        this.avgPlatformWidth,
-        this.avgPlatformHeight
-    );
+        this.#score += Math.floor(dy);
+        }
 
 
-    if (this.#character.y > this.canvasHeight) {
-        this.changeGameState(this.gameStates.death);
-    }
+        generatePlatforms(
+            this.#platforms,
+            0,
+            this.canvasWidth,
+            this.avgPlatformWidth,
+            this.avgPlatformHeight
+        );
 
-    this.#character.draw();
+
+        if (this.#character.y > this.canvasHeight) {
+            this.changeGameState(this.gameStates.death);
+        }
+
+        this.#character.draw();
+
     }
 
     moveCharacter(dx) {
-    this.#character.x += dx;
-
+        
+        this.#character.x += dx;
 
         if (this.#character.x > this.canvasWidth) {
             this.#character.x = 0;
@@ -110,7 +115,18 @@ export default class GameHandler {
     }
 
     endGame() {
-		this.resetGame();
+        if (this.#score > this.#highScore) {
+            this.#highScore = this.#score;
+            }
+
+        // Display final score and high score
+        push();
+        fill(255);
+        textSize(24);
+        textAlign(CENTER, CENTER);
+        text("Score: " + this.#score, this.canvasWidth / 2, 50);
+        text("High Score: " + this.#highScore, this.canvasWidth / 2, 100);
+        pop();
         this.gameButtons.deathButton.draw();
     }
 }

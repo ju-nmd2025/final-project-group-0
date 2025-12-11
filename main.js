@@ -36,7 +36,6 @@ function draw() {
     }
 }
 
-
 // Button logic here as it cannot be taken into classes.
 function mousePressed() {
     switch (gameHandler.currentGameState) {
@@ -47,8 +46,9 @@ function mousePressed() {
             break;
 
         case gameHandler.gameStates.death:
-            if (gameHandler.gameButtons.startButton.isHovered()) {
-                gameHandler.changeGameState(gameHandler.gameStates.start);
+            if (gameHandler.gameButtons.deathButton.isHovered()) {
+                gameHandler.resetGame();
+                gameHandler.changeGameState(gameHandler.gameStates.play);
             }
             break;
 
@@ -57,9 +57,3 @@ function mousePressed() {
     }
 }
 
-// Keypress logic here as it cannot be taken into classes.
-function keyPressed() {
-    if (gameHandler.currentGameState === gameHandler.gameStates.play) {
-        gameHandler.characterJump();
-    }
-}
