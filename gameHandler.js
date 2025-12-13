@@ -44,13 +44,13 @@ export default class GameHandler {
 		this.#character = new Character(100, 200, 50, 50, .4, -15);
 		
         this.#platforms = [
-            new Platform(100, 350, 100, 10),
-            new Platform(250, 300, 100, 10),
-            new Platform(450, 250, 100, 10),
-            new Platform(200, 200, 100, 10),
-            new Platform(350, 150, 100, 10),
-            new Platform(150, 100, 100, 10),
-            new Platform(500, 50, 100, 10),
+            new Platform(100, 350, 100, 10, "normal"),
+            new Platform(250, 300, 100, 10, "moving"),
+            new Platform(450, 250, 100, 10, "breaking"),
+            new Platform(200, 200, 100, 10, "normal"),
+            new Platform(350, 150, 100, 10, "moving"),
+            new Platform(150, 100, 100, 10, "normal"),
+            new Platform(500, 50, 100, 10, "breaking"),
         ];
         this.#character.bounce();
     }
@@ -71,6 +71,9 @@ export default class GameHandler {
         const hitPlatform = this.#character.isColliding(this.#platforms);
         if (hitPlatform) {
             this.#character.bounce();
+            if (hitPlatform.type === "breaking") {
+                hitPlatform.isBroken = true;
+            }
         }
 
         if (this.#character.y < this.canvasHeight / 2) {

@@ -1,46 +1,76 @@
 // Multiple similarities to spikes, both could be interactable objects (maybe a class to inherit from?)
 
 export default class Platform {
-    constructor(x, y, w, h) {
+    constructor(x, y, w, h, type = "normal") {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-    }
 
+        this.type = type;
+        this.isBroken = false;
+        this.direction = 1;
+        this.speed = 2;
+    }
+    update() {
+        if (this.isBroken) {return;}
+        if (this.type === "moving") {
+            this.x += this.direction * this.speed;
+
+            if(this.x < 0){
+                this.x = 0;
+                this.direction *= -1;
+            }
+            if(this.x + this.w > width) {
+                this.x = width - this.w;
+                this.direction *= -1;
+            }
+        }
+    }
     draw() {
-        rect(this.x, this.y, this.w, this.h);
-    }
+        if (this.isBroken) return;
 
-    move(gameSpeed) {
-        this.y += gameSpeed;
+        push();
+        noStroke();
+        if (this.type === "normal") fill(0, 200, 0);
+        else if (this.type === "moving") fill(0, 120, 255);
+        else if (this.type === "breaking") fill(255, 80, 80);
+
+        rect(this.x, this.y, this.w, this.h, 4);
+        pop();
     }
+}
+
+function randomPlatformType() {
+    const r = Math.random();
+    if (r < 0.6) return "normal";
+    if (r < 0.85) return "moving";
+    return "breaking";
 }
 
 function generatePlatforms(
     platforms,
-    gameSpeed,
     canvasWidth,
     standardWidth,
     standardHeight
 ) {
     for (let i = platforms.length - 1; i >= 0; i--) {
         const p = platforms[i];
+
+        p.update();
         p.draw();
 
-        if (p.y > height + 10) { // off bottom
+        if (p.y > height + 20) {
             platforms.splice(i, 1);
 
-            // create new platform at top with random x
             const newWidth = standardWidth + Math.floor(50 * Math.random());
             const newX = Math.floor(Math.random() * (canvasWidth - newWidth));
-            const newY = -Math.floor(50 * Math.random()); // slightly above view
+            const newY = -Math.floor(60 * Math.random());
 
             platforms.push(
-                new Platform(newX, newY, newWidth, 10)
+                new Platform(newX, newY, newWidth, 10, randomPlatformType())
             );
         }
     }
 }
-
 export { Platform, generatePlatforms };
