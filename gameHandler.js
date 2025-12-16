@@ -88,13 +88,7 @@ export default class GameHandler {
         }
 
 
-        generatePlatforms(
-            this.#platforms,
-            0,
-            this.canvasWidth,
-            this.avgPlatformWidth,
-            this.avgPlatformHeight
-        );
+        generatePlatforms(this.#platforms);
 
 
         if (this.#character.y > this.canvasHeight) {

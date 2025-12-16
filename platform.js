@@ -48,12 +48,8 @@ function randomPlatformType() {
     return "breaking";
 }
 
-function generatePlatforms(
-    platforms,
-    canvasWidth,
-    standardWidth,
-    standardHeight
-) {
+function generatePlatforms(platforms) 
+{
     for (let i = platforms.length - 1; i >= 0; i--) {
         const p = platforms[i];
 
@@ -63,12 +59,12 @@ function generatePlatforms(
         if (p.y > height + 20) {
             platforms.splice(i, 1);
 
-            const newWidth = standardWidth + Math.floor(50 * Math.random());
-            const newX = Math.floor(Math.random() * (canvasWidth - newWidth));
+            const fixedWidth = 100;
+            const newX = Math.floor(Math.random() * (width - fixedWidth));
             const newY = -Math.floor(60 * Math.random());
 
             platforms.push(
-                new Platform(newX, newY, newWidth, 10, randomPlatformType())
+                new Platform(newX, newY, fixedWidth, 10, randomPlatformType())
             );
         }
     }
