@@ -9,7 +9,6 @@ export default class GameHandler {
         start: "start",
         play: "play",
         death: "death",
-        win: "win",
     };
 
     gameButtons = {
@@ -22,17 +21,11 @@ export default class GameHandler {
     #score = 0;
     #highScore = 0;
 
-    constructor(
-        canvasWidth = 800,
-        canvasHeight = 400,
-        avgPlatformWidth = 90,
-        avgPlatformHeight = 280
-    ) {
+    constructor(canvasWidth = 800, canvasHeight = 400) 
+    {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.currentGameState = this.gameStates.start;
-        this.avgPlatformWidth = avgPlatformWidth;
-        this.avgPlatformHeight = avgPlatformHeight;
     }
 
     changeGameState(newGameState) {
@@ -56,7 +49,6 @@ export default class GameHandler {
     }
 
     startMenu() {
-		this.resetGame();
         this.gameButtons.startButton.draw();
     }
 

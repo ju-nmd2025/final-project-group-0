@@ -41,10 +41,10 @@ function mousePressed() {
     switch (gameHandler.currentGameState) {
         case gameHandler.gameStates.start:
             if (gameHandler.gameButtons.startButton.isHovered()) {
+                gameHandler.resetGame();
                 gameHandler.changeGameState(gameHandler.gameStates.play);
             }
             break;
-
         case gameHandler.gameStates.death:
             if (gameHandler.gameButtons.deathButton.isHovered()) {
                 gameHandler.resetGame();
