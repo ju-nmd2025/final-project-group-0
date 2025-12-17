@@ -21,10 +21,10 @@ export default class GameHandler {
     #score = 0;
     #highScore = 0;
 
-    constructor(canvasWidth = 800, canvasHeight = 400) 
+    constructor() 
     {
-        this.canvasWidth = canvasWidth;
-        this.canvasHeight = canvasHeight;
+        this.canvasWidth = 400;
+        this.canvasHeight = 600;
         this.currentGameState = this.gameStates.start;
     }
 
@@ -34,16 +34,16 @@ export default class GameHandler {
 
     resetGame() {
         this.#score = 0;
-		this.#character = new Character(100, 200, 50, 50, .4, -15);
-		
+		this.#character = new Character(100, 200, 50, 50, .4, -18);
+
         this.#platforms = [
-            new Platform(100, 350, 100, 10, "normal"),
-            new Platform(250, 300, 100, 10, "moving"),
-            new Platform(450, 250, 100, 10, "breaking"),
-            new Platform(200, 200, 100, 10, "normal"),
-            new Platform(350, 150, 100, 10, "moving"),
-            new Platform(150, 100, 100, 10, "normal"),
-            new Platform(500, 50, 100, 10, "breaking"),
+            new Platform(60, 760, 100, 10, "normal"),
+            new Platform(220, 640, 100, 10, "moving"),
+            new Platform(140, 520, 100, 10, "breaking"),
+            new Platform(80, 400, 100, 10, "normal"),
+            new Platform(240, 280, 100, 10, "moving"),
+            new Platform(120, 160, 100, 10, "normal")
+
         ];
         this.#character.bounce();
     }
