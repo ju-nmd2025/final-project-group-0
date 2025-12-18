@@ -58,11 +58,7 @@ export default class GameHandler {
     }
 
     playGame() {
-        push();
-        fill(0);
-        textSize(36);
-        text("Score: " + this.#score, 10, 30);
-        pop();
+
         this.#character.applyPhysics();
 
         const hitPlatform = this.#character.isColliding(this.#platforms);
@@ -90,6 +86,11 @@ export default class GameHandler {
 
         generatePlatforms(this.#platforms);
 
+        push();
+        fill(0);
+        textSize(36);
+        text("Score: " + this.#score, 10, 30);
+        pop();
 
         if (this.#character.y > this.canvasHeight) {
             this.changeGameState(this.gameStates.death);
@@ -130,11 +131,19 @@ export default class GameHandler {
 
         // Display final score and high score
         push();
+
+
         fill(0);
         textSize(36);
         textAlign(CENTER, CENTER);
-        text("Score: " + this.#score, this.canvasWidth / 2, 200);
-        text("High Score: " + this.#highScore, this.canvasWidth / 2, 250);
+        text("Score: " + this.#score, this.canvasWidth / 2, 100);
+        text("High Score: " + this.#highScore, this.canvasWidth / 2, 150);        
+        
+        fill(255,0,0);        
+        textSize(70);
+        textAlign(CENTER, CENTER);
+        text("Game Over", this.canvasWidth / 2, 250);
+
         pop();
         this.gameButtons.deathButton.draw();
     }
