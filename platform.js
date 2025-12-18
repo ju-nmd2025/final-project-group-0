@@ -59,15 +59,29 @@ function generatePlatforms(platforms)
 
         if (p.y > height + 20) {
             platforms.splice(i, 1);
-
-            const fixedWidth = 80;
-            const newX = Math.floor(Math.random() * (width - fixedWidth));
-            const newY = 0
-
-            platforms.push(
-                new Platform(newX, newY, fixedWidth, 10, randomPlatformType())
-            );
         }
     }
+
+    const targetCount = 20;
+    const gap = 80;
+    const fixedWidth = 80;
+
+    while (platforms.length < targetCount) {
+
+        let highestY = platforms[0].y;
+        for (let i = 1; i < platforms.length; i++) {
+            if (platforms[i].y < highestY) {
+                highestY = platforms[i].y;
+            }
+        }
+
+        const newX = Math.floor(Math.random() * (width - fixedWidth));
+        const newY = highestY - gap;
+
+        platforms.push(
+            new Platform(newX, newY, fixedWidth, 10, randomPlatformType())
+        );
+    }
 }
+
 export { Platform, generatePlatforms };

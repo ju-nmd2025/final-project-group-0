@@ -34,7 +34,7 @@ export default class GameHandler {
     resetGame() {
 
         this.#score = 0;
-		this.#character = new Character(this.canvasWidth / 2, 200, 50, 50, .4, -20);
+		this.#character = new Character(this.canvasWidth / 2, 200, 60, 60, .4, -15); // x, y, w, h, gravity, jumpVelocity
 
         this.#platforms = [
             new Platform(60, 760, 80, 15, "normal"),
@@ -62,13 +62,16 @@ export default class GameHandler {
 
         const hitPlatform = this.#character.isColliding(this.#platforms);
         if (hitPlatform) {
-            this.#character.bounce();
             if (hitPlatform.type === "breaking") {
+                this.#character.vy = this.#character.jumpVelocity / 2;
                 hitPlatform.isBroken = true;
+            }
+            else {
+                this.#character.bounce();
             }
         }
 
-        if (this.#character.y < this.canvasHeight / 2) {
+        if (this.#character.y < this.canvasHeight / 2) { 
             const dy = (this.canvasHeight / 2) - this.#character.y;
 
             this.#character.y = this.canvasHeight / 2;
