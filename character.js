@@ -14,7 +14,7 @@ export default class Character {
 
     applyPhysics() {
         this.vy += this.gravity;
-        this.y += this.vy;
+        this.y += this.vy; 
     }
 
     moveLeft(speed) {
@@ -35,17 +35,21 @@ export default class Character {
     isColliding(platforms) {
         const feetY = this.y + this.h;
 
+        // Check collision with each platform
         for (const p of platforms) {
             if (p.isBroken) continue;
 
+            // Check horizontal overlap
             const withinX =
                 this.x + this.w > p.x &&
                 this.x < p.x + p.w;
 
-            const isFallingDown = this.vy > 0;
+            const isFallingDown = this.vy > 0; // Only check when falling down
 
+            // Check vertical overlap
             const hitFromAbove = feetY >= p.y && feetY <= p.y + p.h;
 
+            // If all conditions met, collision detected
             if (withinX && isFallingDown && hitFromAbove) {
                 this.y = p.y - this.h;
                 return p;

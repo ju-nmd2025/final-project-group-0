@@ -64,7 +64,7 @@ export default class GameHandler {
         const hitPlatform = this.#character.isColliding(this.#platforms);
         if (hitPlatform) {
             if (hitPlatform.type === "breaking") {
-                this.#character.vy = this.#character.jumpVelocity / 2;
+                this.#character.vy = this.#character.jumpVelocity / 1.5;
                 hitPlatform.isBroken = true;
             }
             else {

@@ -43,7 +43,7 @@ export default class Platform {
 }
 
 function randomPlatformType() {
-    const r = Math.random(); // 0 to 1
+    const r = Math.random();
     if (r < 0.6) return "normal"; // 60% chance
     if (r < 0.8) return "moving"; // 20% chance
     return "breaking"; // 20% chance
@@ -63,20 +63,25 @@ function generatePlatforms(platforms)
     }
 
     const targetCount = 20;
-    const gap = 80;
+    const gap = 120;
     const fixedWidth = 80;
+
 
     while (platforms.length < targetCount) {
 
+         // Assume at least one platform exists
         let highestY = platforms[0].y;
         for (let i = 1; i < platforms.length; i++) {
+
+            // Find the platform with the smallest y
             if (platforms[i].y < highestY) {
                 highestY = platforms[i].y;
             }
         }
 
-        const newX = Math.floor(Math.random() * (width - fixedWidth));
-        const newY = highestY - gap;
+
+        const newX = Math.floor(Math.random() * (width - fixedWidth)); // Ensure platform fits within canvas
+        const newY = highestY - gap; // Place new platform above the highest existing one
 
         platforms.push(
             new Platform(newX, newY, fixedWidth, 15, randomPlatformType())

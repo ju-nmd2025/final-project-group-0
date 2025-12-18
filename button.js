@@ -14,7 +14,7 @@ export default class Button {
         let drawX = this.centered ? (width / 2 - this.w / 2) : this.x;
         let drawY = this.centered ? (height / 2 - this.h / 2) : this.y;
 
-        fill(0,0,0,0.2);
+        fill(0, 0, 0, 50);
         rect(drawX, drawY, this.w, this.h, 10, 10);
         push();
         fill(0);
