@@ -57,7 +57,7 @@ function generatePlatforms(platforms)
         p.update();
         p.draw();
 
-        if (p.y > height + 20) {
+        if (p.y > height) {
             platforms.splice(i, 1);
         }
     }

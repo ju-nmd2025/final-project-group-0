@@ -11,16 +11,15 @@ export default class Button {
     }
 
     draw() {
-
         let drawX = this.centered ? (width / 2 - this.w / 2) : this.x;
         let drawY = this.centered ? (height / 2 - this.h / 2) : this.y;
 
-        fill(220);
+        fill(0,0,0,0.2);
         rect(drawX, drawY, this.w, this.h, 10, 10);
         push();
         fill(0);
         textAlign(CENTER, CENTER);
-        textSize(20);
+        textSize(36);
         text(this.text, drawX + this.w / 2, drawY + this.h / 2);
         pop();
     }

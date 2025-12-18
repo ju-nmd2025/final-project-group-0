@@ -2,7 +2,6 @@ import { Platform, generatePlatforms } from "./platform";
 import Character from "./character";
 import Button from "./button";
 
-
 export default class GameHandler {
     gameStates = {
         start: "start",
@@ -11,7 +10,7 @@ export default class GameHandler {
     };
 
     gameButtons = {
-        startButton: new Button(0, 0, 300, 80, "Start", true),
+        startButton: new Button(0, 0, 200, 80, "Start", true),
         deathButton: new Button(0, 0, 350, 80, "Restart", true),
     };
 
@@ -49,13 +48,19 @@ export default class GameHandler {
     }
 
     startMenu() {
+        push();
+        fill(0);
+        textSize(56);
+        textAlign(CENTER, CENTER);
+        text("Dodle Jump", this.canvasWidth / 2, this.canvasHeight / 4);
+        pop();
         this.gameButtons.startButton.draw();
     }
 
     playGame() {
         push();
         fill(0);
-        textSize(20);
+        textSize(36);
         text("Score: " + this.#score, 10, 30);
         pop();
         this.#character.applyPhysics();
@@ -126,10 +131,10 @@ export default class GameHandler {
         // Display final score and high score
         push();
         fill(0);
-        textSize(24);
+        textSize(36);
         textAlign(CENTER, CENTER);
-        text("Score: " + this.#score, this.canvasWidth / 2, 50);
-        text("High Score: " + this.#highScore, this.canvasWidth / 2, 100);
+        text("Score: " + this.#score, this.canvasWidth / 2, 200);
+        text("High Score: " + this.#highScore, this.canvasWidth / 2, 250);
         pop();
         this.gameButtons.deathButton.draw();
     }

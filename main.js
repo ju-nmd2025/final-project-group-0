@@ -18,7 +18,6 @@ function preload() {
 function setup() {
     createCanvas(gameHandler.canvasWidth, gameHandler.canvasHeight);
     textFont(gameFont);
-    textSize(36);    
 }
 
 function draw() {
