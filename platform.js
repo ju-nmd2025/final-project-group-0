@@ -43,10 +43,10 @@ export default class Platform {
 }
 
 function randomPlatformType() {
-    const r = Math.random();
+    const r = Math.random(); // 0 to 1
     if (r < 0.6) return "normal"; // 60% chance
-    if (r < 0.85) return "moving"; // 25% chance
-    return "breaking"; // 15% chance
+    if (r < 0.8) return "moving"; // 20% chance
+    return "breaking"; // 20% chance
 }
 
 function generatePlatforms(platforms) 
@@ -79,7 +79,7 @@ function generatePlatforms(platforms)
         const newY = highestY - gap;
 
         platforms.push(
-            new Platform(newX, newY, fixedWidth, 10, randomPlatformType())
+            new Platform(newX, newY, fixedWidth, 15, randomPlatformType())
         );
     }
 }

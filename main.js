@@ -1,6 +1,7 @@
 import GameHandler from "./gameHandler.js";
 let gameHandler = new GameHandler();
 let images = {};
+let gameFont;
 // This file serves as the main engine for the game, but relies on gameHandler for true logic. Closer to being UI (due to button / keypress).
 
 function preload() {
@@ -12,12 +13,15 @@ function preload() {
     images.right = loadImage("assets/bunny-right@2x.png");
     images.rightJump = loadImage("assets/bunny-right-odskok@2x.png");}
 
+    gameFont = loadFont("assets/DoodleJump.ttf");
+
 function setup() {
     createCanvas(gameHandler.canvasWidth, gameHandler.canvasHeight);
+    textFont(gameFont);
+    textSize(36);    
 }
 
 function draw() {
-    background(255);
     image(images.background, 0, 0, width, height);
     if (gameHandler.currentGameState === gameHandler.gameStates.play) {
 

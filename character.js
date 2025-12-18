@@ -59,11 +59,15 @@ export default class Character {
 
         const isJumping = this.vy < 0;
 
+
         if (this.facing === "left") {
-            sprite = isJumping ? images.leftJump : images.left;
+            if (isJumping) { sprite = images.leftJump; }
+            else { sprite = images.left; }
         } 
+        
         else {
-            sprite = isJumping ? images.rightJump : images.right;
+            if (isJumping) { sprite = images.rightJump; }
+            else { sprite = images.right; }
         }
 
         image(sprite, this.x, this.y, this.w, this.h);
