@@ -1,7 +1,7 @@
 // Character centric logic
 
 export default class Character {
-    constructor(x, y, w, h, gravity, jumpVelocity) {
+    constructor(x, y, w, h, gravity, jumpVelocity, facing = "right") {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -9,6 +9,7 @@ export default class Character {
         this.gravity = gravity;
         this.jumpVelocity = jumpVelocity;
         this.vy = 0;
+        this.facing = facing;
     }
 
     applyPhysics() {
@@ -18,10 +19,12 @@ export default class Character {
 
     moveLeft(speed) {
     this.x -= speed;
+    this.facing = "left";
     }
 
     moveRight(speed) {
     this.x += speed;
+    this.facing = "right";
     }
 
 
@@ -41,7 +44,7 @@ export default class Character {
 
             const isFallingDown = this.vy > 0;
 
-            const hitFromAbove = feetY >= p.y && feetY <= p.y + p.h; //  
+            const hitFromAbove = feetY >= p.y && feetY <= p.y + p.h;
 
             if (withinX && isFallingDown && hitFromAbove) {
                 this.y = p.y - this.h;
@@ -51,14 +54,18 @@ export default class Character {
 
         return null;
     }
-
     draw() {
-        rect(this.x, this.y, this.w, this.h);
+        let sprite;
 
-        push();
-        fill("black");
-        rect(this.x + this.w - 20, this.y + 20, 4, 4);
-        rect(this.x + this.w - 10, this.y + 20, 4, 4);
-        pop();
+        const isJumping = this.vy < 0;
+
+        if (this.facing === "left") {
+            sprite = isJumping ? images.leftJump : images.left;
+        } 
+        else {
+            sprite = isJumping ? images.rightJump : images.right;
+        }
+
+        image(sprite, this.x, this.y, this.w, this.h);
     }
 }

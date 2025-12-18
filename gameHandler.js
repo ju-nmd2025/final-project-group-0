@@ -2,7 +2,6 @@ import { Platform, generatePlatforms } from "./platform";
 import Character from "./character";
 import Button from "./button";
 
-// The Controller, or GameHandler, currently initiates and calls other objects/classes to collaborate. It does almost nothing on it's own, and if it were nicer it would do even less on it's own.
 
 export default class GameHandler {
     gameStates = {
@@ -23,8 +22,8 @@ export default class GameHandler {
 
     constructor() 
     {
-        this.canvasWidth = 400;
-        this.canvasHeight = 600;
+        this.canvasWidth = 500;
+        this.canvasHeight = 700;
         this.currentGameState = this.gameStates.start;
     }
 
@@ -33,16 +32,17 @@ export default class GameHandler {
     }
 
     resetGame() {
+
         this.#score = 0;
-		this.#character = new Character(100, 200, 50, 50, .4, -18);
+		this.#character = new Character(this.canvasWidth / 2, 200, 50, 50, .4, -20);
 
         this.#platforms = [
-            new Platform(60, 760, 100, 10, "normal"),
-            new Platform(220, 640, 100, 10, "moving"),
-            new Platform(140, 520, 100, 10, "breaking"),
-            new Platform(80, 400, 100, 10, "normal"),
-            new Platform(240, 280, 100, 10, "moving"),
-            new Platform(120, 160, 100, 10, "normal")
+            new Platform(60, 760, 80, 15, "normal"),
+            new Platform(220, 640, 80, 15, "moving"),
+            new Platform(140, 520, 80, 15, "breaking"),
+            new Platform(80, 400, 80, 15, "normal"),
+            new Platform(240, 280, 80, 15, "normal"),
+            new Platform(120, 160, 80, 15, "normal")
 
         ];
         this.#character.bounce();
@@ -54,7 +54,7 @@ export default class GameHandler {
 
     playGame() {
         push();
-        fill(255);
+        fill(0);
         textSize(20);
         text("Score: " + this.#score, 10, 30);
         pop();
@@ -93,7 +93,19 @@ export default class GameHandler {
 
     moveCharacter(dx) {
         
-        this.#character.x += dx;
+        if (dx < 0) {
+            this.#character.moveLeft(Math.abs(dx));
+        } 
+        else if (dx > 0) {
+            this.#character.moveRight(dx);
+        }
+
+        if (this.#character.x - this.#character.w > this.canvasWidth) {
+            this.#character.x = 0;
+        } 
+        else if (this.#character.x < 0) {
+            this.#character.x = this.canvasWidth;
+        }
 
         if (this.#character.x > this.canvasWidth) {
             this.#character.x = 0;
@@ -110,7 +122,7 @@ export default class GameHandler {
 
         // Display final score and high score
         push();
-        fill(255);
+        fill(0);
         textSize(24);
         textAlign(CENTER, CENTER);
         text("Score: " + this.#score, this.canvasWidth / 2, 50);

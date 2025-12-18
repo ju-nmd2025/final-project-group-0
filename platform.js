@@ -14,6 +14,7 @@ export default class Platform {
     }
     update() {
         if (this.isBroken) {return;}
+        
         if (this.type === "moving") {
             this.x += this.direction * this.speed;
 
@@ -43,9 +44,9 @@ export default class Platform {
 
 function randomPlatformType() {
     const r = Math.random();
-    if (r < 0.6) return "normal";
-    if (r < 0.85) return "moving";
-    return "breaking";
+    if (r < 0.6) return "normal"; // 60% chance
+    if (r < 0.85) return "moving"; // 25% chance
+    return "breaking"; // 15% chance
 }
 
 function generatePlatforms(platforms) 
@@ -59,9 +60,9 @@ function generatePlatforms(platforms)
         if (p.y > height + 20) {
             platforms.splice(i, 1);
 
-            const fixedWidth = 100;
+            const fixedWidth = 80;
             const newX = Math.floor(Math.random() * (width - fixedWidth));
-            const newY = -Math.floor(60 * Math.random());
+            const newY = 0
 
             platforms.push(
                 new Platform(newX, newY, fixedWidth, 10, randomPlatformType())

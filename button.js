@@ -16,7 +16,7 @@ export default class Button {
         let drawY = this.centered ? (height / 2 - this.h / 2) : this.y;
 
         fill(220);
-        rect(drawX, drawY, this.w, this.h, 10);
+        rect(drawX, drawY, this.w, this.h, 10, 10);
         push();
         fill(0);
         textAlign(CENTER, CENTER);
