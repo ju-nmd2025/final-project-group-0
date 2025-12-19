@@ -109,14 +109,8 @@ export default class GameHandler {
             this.#character.moveRight(dx);
         }
 
+        
         if (this.#character.x - this.#character.w > this.canvasWidth) {
-            this.#character.x = 0;
-        } 
-        else if (this.#character.x < 0) {
-            this.#character.x = this.canvasWidth;
-        }
-
-        if (this.#character.x > this.canvasWidth) {
             this.#character.x = 0;
         } 
         else if (this.#character.x < 0) {
