@@ -67,4 +67,4 @@ function mousePressed() {
             console.error("Error: mousePressed()");
     }
 }
-
+window.draw = draw;
