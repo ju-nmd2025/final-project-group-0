@@ -1,6 +1,6 @@
-import { Platform, generatePlatforms } from "./platform";
-import Character from "./character";
-import Button from "./button";
+import { Platform, generatePlatforms } from "./platform.js";
+import Character from "./character.js";
+import Button from "./button.js";
 
 export default class GameHandler {
     gameStates = {

@@ -7,20 +7,25 @@ let gameFont;
 function preload() {
     images.background = loadImage("assets/bck@2x.png");
 
-    images.left = loadImage("assets/bunny-left@2x.png");
-    images.leftJump = loadImage("assets/bunny-left-odskok@2x.png");
+    images.left = loadImage("./assets/bunny-left@2x.png");
+    images.leftJump = loadImage("./assets/bunny-left-odskok@2x.png");
 
-    images.right = loadImage("assets/bunny-right@2x.png");
-    images.rightJump = loadImage("assets/bunny-right-odskok@2x.png");}
-
-    gameFont = loadFont("assets/DoodleJump.ttf");
+    images.right = loadImage("./assets/bunny-right@2x.png");
+    images.rightJump = loadImage("./assets/bunny-right-odskok@2x.png");
+    
+    gameFont = loadFont("./assets/DoodleJump.ttf");
+}
+window.preload = preload;
 
 function setup() {
+    frameRate(60);
     createCanvas(gameHandler.canvasWidth, gameHandler.canvasHeight);
     textFont(gameFont);
 }
+window.setup = setup;
 
 function draw() {
+
     image(images.background, 0, 0, width, height);
     if (gameHandler.currentGameState === gameHandler.gameStates.play) {
 
@@ -46,6 +51,7 @@ function draw() {
             console.error("Error: draw() main");
     }
 }
+window.draw = draw;
 
 // Button logic here as it cannot be taken into classes.
 function mousePressed() {
@@ -67,4 +73,5 @@ function mousePressed() {
             console.error("Error: mousePressed()");
     }
 }
-window.draw = draw;
+window.mousePressed = mousePressed;
+export { images };

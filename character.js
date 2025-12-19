@@ -1,5 +1,5 @@
+import { images } from "./main.js";
 // Character centric logic
-
 export default class Character {
     constructor(x, y, w, h, gravity, jumpVelocity, facing = "right") {
         this.x = x;
